@@ -1787,6 +1787,1301 @@ paths:
       security:
         -
           ciab_auth: []
+  '/artshow/art/{piece}':
+    delete:
+      tags:
+        - artshow
+      summary: 'Deletes an piece of hung art'
+      parameters:
+        -
+          name: piece
+          in: path
+          description: 'Id of the piece'
+          required: true
+          schema:
+            type: integer
+        -
+          $ref: '#/components/parameters/target_event'
+      responses:
+        '204':
+          description: OK
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/art_not_found'
+      security:
+        -
+          ciab_auth: []
+  '/artshow/art/piece/{id}':
+    get:
+      tags:
+        - artshow
+      summary: 'Gets information about a piece of art'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Id of the piece.'
+          required: true
+          schema:
+            type: integer
+        -
+          $ref: '#/components/parameters/target_event'
+        -
+          $ref: '#/components/parameters/short_response'
+      responses:
+        '200':
+          description: 'Art found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artshow_art_list'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/art_not_found'
+      security:
+        -
+          ciab_auth: []
+  /artshow/art:
+    post:
+      tags:
+        - artshow
+      summary: 'Adds a new piece of art'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                '':
+                  $ref: '#/components/schemas/artshow_art'
+              type: object
+      responses:
+        '201':
+          description: 'Art added'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artshow_art'
+        '401':
+          $ref: '#/components/responses/401'
+      security:
+        -
+          ciab_auth: []
+  '/artshow/art/{id}':
+    put:
+      tags:
+        - artshow
+      summary: 'Updates a piece of art'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Id of the piece of art'
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                '':
+                  $ref: '#/components/schemas/artshow_art'
+              type: object
+      responses:
+        '200':
+          description: 'Art updated'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artshow_art'
+        '401':
+          $ref: '#/components/responses/401'
+      security:
+        -
+          ciab_auth: []
+  '/artshow/artist/member/{id}':
+    get:
+      tags:
+        - artshow
+      summary: 'Gets an artist from member id'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Id of the member'
+          required: true
+          schema:
+            type: integer
+        -
+          $ref: '#/components/parameters/short_response'
+      responses:
+        '200':
+          description: 'Artist found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artshow_artist'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/artist_not_found'
+      security:
+        -
+          ciab_auth: []
+  /artshow/artist:
+    get:
+      tags:
+        - artshow
+      summary: 'Gets currents member artist information'
+      parameters:
+        -
+          $ref: '#/components/parameters/short_response'
+      responses:
+        '200':
+          description: 'Artist found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artshow_artist'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/artist_not_found'
+      security:
+        -
+          ciab_auth: []
+    post:
+      tags:
+        - artshow
+      summary: 'Adds new artist information'
+      parameters:
+        -
+          $ref: '#/components/parameters/short_response'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                member:
+                  type: integer
+                company_name:
+                  type: string
+                company_name_on_sheet:
+                  type: boolean
+                company_name_on_payment:
+                  type: boolean
+                website:
+                  type: string
+                notes:
+                  type: string
+                professional:
+                  type: boolean
+                guest_of_honor:
+                  type: boolean
+              type: object
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artshow_artist'
+        '401':
+          $ref: '#/components/responses/401'
+      security:
+        -
+          ciab_auth: []
+  '/artshow/artist/{id}':
+    get:
+      tags:
+        - artshow
+      summary: 'Gets an artist'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Id of the artist'
+          required: true
+          schema:
+            type: integer
+        -
+          $ref: '#/components/parameters/short_response'
+      responses:
+        '200':
+          description: 'Artist found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artshow_artist'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/artist_not_found'
+      security:
+        -
+          ciab_auth: []
+    put:
+      tags:
+        - artshow
+      summary: 'Updates artist information'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Id of the artist'
+          required: true
+          schema:
+            type: integer
+        -
+          $ref: '#/components/parameters/short_response'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                member:
+                  type: integer
+                company_name:
+                  type: string
+                company_name_on_sheet:
+                  type: boolean
+                company_name_on_payment:
+                  type: boolean
+                website:
+                  type: string
+                notes:
+                  type: string
+                professional:
+                  type: boolean
+                guest_of_honor:
+                  type: boolean
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artshow_artist'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/artist_not_found'
+      security:
+        -
+          ciab_auth: []
+  '/artshow/artist/{artist}/tags':
+    get:
+      tags:
+        - artshow
+      summary: 'Gets art tags for artist'
+      parameters:
+        -
+          name: artist
+          in: path
+          description: 'Id of the artist'
+          required: true
+          schema:
+            type: integer
+        -
+          $ref: '#/components/parameters/target_event'
+        -
+          $ref: '#/components/parameters/short_response'
+      responses:
+        '200':
+          description: 'Tags found'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/artist_not_found'
+      security:
+        -
+          ciab_auth: []
+  /artshow/artists:
+    get:
+      tags:
+        - artshow
+      summary: 'List artist'
+      parameters:
+        -
+          $ref: '#/components/parameters/target_event'
+        -
+          $ref: '#/components/parameters/short_response'
+        -
+          $ref: '#/components/parameters/max_results'
+        -
+          $ref: '#/components/parameters/page_token'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artshow_artist_list'
+        '401':
+          $ref: '#/components/responses/401'
+      security:
+        -
+          ciab_auth: []
+  '/artshow/configuration/paymenttype/{type}':
+    get:
+      tags:
+        - artshow
+      summary: 'Gets an art show payment type'
+      parameters:
+        -
+          name: type
+          in: path
+          description: 'Type to get'
+          required: true
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/short_response'
+      responses:
+        '200':
+          description: 'Payment type found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artshow_payment_type'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/artshow_configuration_not_found'
+      security:
+        -
+          ciab_auth: []
+    put:
+      tags:
+        - artshow
+      summary: 'Updates an artshow payment type'
+      parameters:
+        -
+          name: type
+          in: path
+          description: 'Payment type to update'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                payment:
+                  type: string
+                  nullable: false
+              type: object
+      responses:
+        '200':
+          description: OK
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/artshow_configuration_not_found'
+      security:
+        -
+          ciab_auth: []
+    delete:
+      tags:
+        - artshow
+      summary: 'Deletes a payment type'
+      parameters:
+        -
+          name: type
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: OK
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/artshow_configuration_not_found'
+      security:
+        -
+          ciab_auth: []
+  '/artshow/configuration/piecetype/{type}':
+    get:
+      tags:
+        - artshow
+      summary: 'Gets an art show piece type'
+      parameters:
+        -
+          name: type
+          in: path
+          description: 'Type to get'
+          required: true
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/short_response'
+      responses:
+        '200':
+          description: 'Payment type found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artshow_piece_type'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/artshow_configuration_not_found'
+      security:
+        -
+          ciab_auth: []
+    put:
+      tags:
+        - artshow
+      summary: 'Updates an artshow piece type'
+      parameters:
+        -
+          name: type
+          in: path
+          description: 'Piece type to update'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                piece:
+                  type: string
+                  nullable: false
+              type: object
+      responses:
+        '200':
+          description: OK
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/artshow_configuration_not_found'
+      security:
+        -
+          ciab_auth: []
+    delete:
+      tags:
+        - artshow
+      summary: 'Deletes a piece type'
+      parameters:
+        -
+          name: type
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: OK
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/artshow_configuration_not_found'
+      security:
+        -
+          ciab_auth: []
+  '/artshow/configuration/pricetype/{type}':
+    get:
+      tags:
+        - artshow
+      summary: 'Gets an art show price type'
+      parameters:
+        -
+          name: type
+          in: path
+          description: 'Type to get'
+          required: true
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/short_response'
+      responses:
+        '200':
+          description: 'Payment type found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artshow_price_type'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/artshow_configuration_not_found'
+      security:
+        -
+          ciab_auth: []
+    put:
+      tags:
+        - artshow
+      summary: 'Updates an artshow price type'
+      parameters:
+        -
+          name: type
+          in: path
+          description: 'Price Type to update'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                price:
+                  description: 'Price Name'
+                  type: string
+                position:
+                  description: 'Price positon on bid sheet'
+                  type: integer
+                artist_set:
+                  description: 'Price is set by artist'
+                  type: integer
+              type: object
+      responses:
+        '200':
+          description: OK
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/artshow_configuration_not_found'
+      security:
+        -
+          ciab_auth: []
+    delete:
+      tags:
+        - artshow
+      summary: 'Deletes a price type'
+      parameters:
+        -
+          name: type
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: OK
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/artshow_configuration_not_found'
+      security:
+        -
+          ciab_auth: []
+  '/artshow/configuration/registrationquestion/{type}':
+    get:
+      tags:
+        - artshow
+      summary: 'Gets an art show registration question'
+      parameters:
+        -
+          name: type
+          in: path
+          description: 'Question ID to get'
+          required: true
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/short_response'
+      responses:
+        '200':
+          description: 'Payment type found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artshow_registration_question'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/artshow_configuration_not_found'
+      security:
+        -
+          ciab_auth: []
+    put:
+      tags:
+        - artshow
+      summary: 'Updates an artshow Registration Question'
+      parameters:
+        -
+          name: type
+          in: path
+          description: 'Question ID to update'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                text:
+                  type: string
+                boolean:
+                  type: integer
+                  enum: [0, 1]
+              type: object
+      responses:
+        '200':
+          description: OK
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/artshow_configuration_not_found'
+      security:
+        -
+          ciab_auth: []
+    delete:
+      tags:
+        - artshow
+      summary: 'Deletes a registartion question'
+      parameters:
+        -
+          name: type
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: OK
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/artshow_configuration_not_found'
+      security:
+        -
+          ciab_auth: []
+  '/artshow/configuration/returnmethod/{type}':
+    get:
+      tags:
+        - artshow
+      summary: 'Gets an art show return method'
+      parameters:
+        -
+          name: type
+          in: path
+          description: 'Type to get'
+          required: true
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/short_response'
+      responses:
+        '200':
+          description: 'Payment type found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artshow_return_method_type'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/artshow_configuration_not_found'
+      security:
+        -
+          ciab_auth: []
+    put:
+      tags:
+        - artshow
+      summary: 'Updates an artshow return method'
+      parameters:
+        -
+          name: type
+          in: path
+          description: 'Return method to update'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                method:
+                  type: string
+                  nullable: false
+              type: object
+      responses:
+        '200':
+          description: OK
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/artshow_configuration_not_found'
+      security:
+        -
+          ciab_auth: []
+    delete:
+      tags:
+        - artshow
+      summary: 'Deletes a return method'
+      parameters:
+        -
+          name: type
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: OK
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/artshow_configuration_not_found'
+      security:
+        -
+          ciab_auth: []
+  '/artshow/configuration/{field}':
+    get:
+      tags:
+        - artshow
+      summary: 'Get a configuration setting for the art show'
+      parameters:
+        -
+          name: field
+          in: path
+          description: 'Configuration setting field'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configuration'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/configuration_not_found'
+      security:
+        -
+          ciab_auth: []
+  /artshow/configuration:
+    get:
+      tags:
+        - artshow
+      summary: 'Get a configuration setting for the art show'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configuration_list'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/configuration_not_found'
+      security:
+        -
+          ciab_auth: []
+    put:
+      tags:
+        - artshow
+      summary: 'Updates an artshow configuration setting'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                Field:
+                  type: string
+                  nullable: false
+                Value:
+                  type: string
+                  nullable: false
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configuration'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/configuration_not_found'
+      security:
+        -
+          ciab_auth: []
+  /artshow/configuration/paymenttype:
+    get:
+      tags:
+        - artshow
+      summary: 'List art show payment types'
+      parameters:
+        -
+          $ref: '#/components/parameters/short_response'
+      responses:
+        '200':
+          description: 'Payment type found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artshow_payment_type_list'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/artshow_configuration_not_found'
+      security:
+        -
+          ciab_auth: []
+    post:
+      tags:
+        - artshow
+      summary: 'Adds a new payment type'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                payment:
+                  type: string
+              type: object
+      responses:
+        '201':
+          description: OK
+        '401':
+          $ref: '#/components/responses/401'
+      security:
+        -
+          ciab_auth: []
+  /artshow/configuration/piecetype:
+    get:
+      tags:
+        - artshow
+      summary: 'List art show piece types'
+      parameters:
+        -
+          $ref: '#/components/parameters/short_response'
+      responses:
+        '200':
+          description: 'Payment type found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artshow_piece_type_list'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/artshow_configuration_not_found'
+      security:
+        -
+          ciab_auth: []
+    post:
+      tags:
+        - artshow
+      summary: 'Adds a new piece type'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                piece:
+                  type: string
+              type: object
+      responses:
+        '201':
+          description: OK
+        '401':
+          $ref: '#/components/responses/401'
+      security:
+        -
+          ciab_auth: []
+  /artshow/configuration/pricetype:
+    get:
+      tags:
+        - artshow
+      summary: 'List art show price types'
+      parameters:
+        -
+          $ref: '#/components/parameters/short_response'
+      responses:
+        '200':
+          description: 'Payment type found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artshow_price_type_list'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/artshow_configuration_not_found'
+      security:
+        -
+          ciab_auth: []
+    post:
+      tags:
+        - artshow
+      summary: 'Adds a new price type'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                price:
+                  type: string
+                artist_set:
+                  description: 'Does the artist decide this'
+                  type: integer
+                  enum: [0, 1]
+              type: object
+      responses:
+        '201':
+          description: OK
+        '401':
+          $ref: '#/components/responses/401'
+      security:
+        -
+          ciab_auth: []
+  /artshow/configuration/registrationquestion:
+    get:
+      tags:
+        - artshow
+      summary: 'List art show registration questions '
+      parameters:
+        -
+          $ref: '#/components/parameters/short_response'
+      responses:
+        '200':
+          description: 'Payment type found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artshow_registration_question_list'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/artshow_configuration_not_found'
+      security:
+        -
+          ciab_auth: []
+    post:
+      tags:
+        - artshow
+      summary: 'Adds a new artist registration question'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                text:
+                  type: string
+                boolean:
+                  type: integer
+                  enum: [0, 1]
+              type: object
+      responses:
+        '201':
+          description: OK
+        '401':
+          $ref: '#/components/responses/401'
+      security:
+        -
+          ciab_auth: []
+  /artshow/configuration/returnmethod:
+    get:
+      tags:
+        - artshow
+      summary: 'List art show return methods'
+      parameters:
+        -
+          $ref: '#/components/parameters/short_response'
+      responses:
+        '200':
+          description: 'Payment type found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artshow_return_method_type_list'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/artshow_configuration_not_found'
+      security:
+        -
+          ciab_auth: []
+    post:
+      tags:
+        - artshow
+      summary: 'Adds a new return method'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                method:
+                  type: string
+              type: object
+      responses:
+        '201':
+          description: OK
+        '401':
+          $ref: '#/components/responses/401'
+      security:
+        -
+          ciab_auth: []
+  '/artshow/print/{piece}':
+    delete:
+      tags:
+        - artshow
+      summary: 'Deletes an piece of print art'
+      parameters:
+        -
+          name: piece
+          in: path
+          description: 'Id of the piece'
+          required: true
+          schema:
+            type: integer
+        -
+          $ref: '#/components/parameters/target_event'
+      responses:
+        '204':
+          description: OK
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/print_not_found'
+      security:
+        -
+          ciab_auth: []
+  '/artshow/print/{id}':
+    get:
+      tags:
+        - artshow
+      summary: 'Gets information about a piece of print art'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Id of the piece.'
+          required: true
+          schema:
+            type: integer
+        -
+          $ref: '#/components/parameters/target_event'
+        -
+          $ref: '#/components/parameters/short_response'
+      responses:
+        '200':
+          description: 'Art found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artshow_print_list'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/print_not_found'
+      security:
+        -
+          ciab_auth: []
+    put:
+      tags:
+        - artshow
+      summary: 'Updates a piece of print art'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Id of the piece of print art'
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                '':
+                  $ref: '#/components/schemas/artshow_print'
+              type: object
+      responses:
+        '200':
+          description: 'Print updated'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artshow_print'
+        '401':
+          $ref: '#/components/responses/401'
+      security:
+        -
+          ciab_auth: []
+  /artshow/print:
+    post:
+      tags:
+        - artshow
+      summary: 'Adds a new piece of print art'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                '':
+                  $ref: '#/components/schemas/artshow_print'
+              type: object
+      responses:
+        '201':
+          description: 'Print added'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artshow_print'
+        '401':
+          $ref: '#/components/responses/401'
+      security:
+        -
+          ciab_auth: []
+  '/artshow/artist/{artist}/show':
+    get:
+      tags:
+        - artshow
+      summary: 'Gets the event information for an artist'
+      parameters:
+        -
+          name: artist
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/target_event'
+        -
+          $ref: '#/components/parameters/short_response'
+      responses:
+        '200':
+          description: 'Payment type found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artshow_artist_event'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/artshow_configuration_not_found'
+      security:
+        -
+          ciab_auth: []
+    put:
+      tags:
+        - artshow
+      summary: 'Updates an artist''s show registration'
+      parameters:
+        -
+          name: artist
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/target_event'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                mail_in:
+                  description: 'Is this mail in art?'
+                  type: string
+                return_method:
+                  type: string
+                insurance_amount:
+                  type: string
+                initial_payment:
+                  type: string
+                payment_type:
+                  type: string
+                check_number:
+                  type: string
+                notes:
+                  type: string
+                return_labels:
+                  type: string
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artshow_artist_event'
+        '401':
+          $ref: '#/components/responses/401'
+        '400':
+          description: 'Cycle not found in the system which contains event dates.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+        -
+          ciab_auth: []
+    post:
+      tags:
+        - artshow
+      summary: 'Adds a artist event information'
+      parameters:
+        -
+          name: artist
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/target_event'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                mail_in:
+                  description: 'Is this mail in art?'
+                  type: string
+                return_method:
+                  type: string
+                insurance_amount:
+                  type: string
+                initial_payment:
+                  type: string
+                payment_type:
+                  type: string
+                check_number:
+                  type: string
+                notes:
+                  type: string
+                return_labels:
+                  type: string
+              type: object
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artshow_artist_event'
+        '401':
+          $ref: '#/components/responses/401'
+        '400':
+          description: 'Cycle not found in the system which contains event dates.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+        -
+          ciab_auth: []
   '/registration/admin/configuration/{field}':
     get:
       tags:
@@ -3430,6 +4725,362 @@ components:
       allOf:
         -
           $ref: '#/components/schemas/resource_list'
+    artshow_art_price:
+      properties:
+        type:
+          type: string
+          enum:
+            - art_price
+        price_type:
+          type: string
+        amount:
+          type: integer
+      type: object
+    artshow_art:
+      properties:
+        type:
+          type: string
+          enum:
+            - art
+        id:
+          type: integer
+        event:
+          oneOf:
+            -
+              $ref: '#/components/schemas/event'
+            -
+              description: 'Event Id'
+              type: integer
+        artist:
+          oneOf:
+            -
+              $ref: '#/components/schemas/artshow_artist'
+            -
+              description: 'Artist Id'
+              type: integer
+        name:
+          type: string
+        medium:
+          type: string
+        art_type:
+          type: string
+        edition:
+          type: string
+        not_for_sale:
+          type: boolean
+        charity:
+          type: boolean
+        non_tax:
+          type: boolean
+        notes:
+          type: string
+        location:
+          type: string
+        tag_print_count:
+          type: integer
+        status:
+          type: string
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/artshow_art_price'
+      type: object
+    artshow_art_list:
+      properties:
+        type:
+          type: string
+          enum:
+            - art_list
+        data:
+          description: 'List of art'
+          type: array
+          items:
+            $ref: '#/components/schemas/artshow_art'
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/resource_list'
+    artshow_artist:
+      properties:
+        type:
+          type: string
+          enum:
+            - artist
+        id:
+          description: 'Artist Id'
+          type: integer
+        member:
+          oneOf:
+            -
+              $ref: '#/components/schemas/member'
+            -
+              description: 'Member Id'
+              type: integer
+        company_name:
+          type: string
+        company_name_on_sheet:
+          type: boolean
+        company_name_on_payment:
+          type: boolean
+        website:
+          type: string
+        notes:
+          type: string
+        professional:
+          type: boolean
+        inactive:
+          type: boolean
+        guest_of_honor:
+          type: boolean
+      type: object
+    artshow_artist_list:
+      properties:
+        type:
+          type: string
+          enum:
+            - artist_list
+        data:
+          description: 'List of artists'
+          type: array
+          items:
+            $ref: '#/components/schemas/artshow_artist'
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/resource_list'
+    artshow_payment_type:
+      properties:
+        type:
+          type: string
+          enum:
+            - payment_type
+        payment:
+          description: 'Payment Type'
+          type: string
+      type: object
+    artshow_payment_type_list:
+      properties:
+        type:
+          type: string
+          enum:
+            - payment_type_list
+        data:
+          description: 'List of payment types'
+          type: array
+          items:
+            $ref: '#/components/schemas/artshow_payment_type'
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/resource_list'
+    artshow_piece_type:
+      properties:
+        type:
+          type: string
+          enum:
+            - piece_type
+        piece:
+          description: 'Piece Type'
+          type: string
+      type: object
+    artshow_piece_type_list:
+      properties:
+        type:
+          type: string
+          enum:
+            - piece_type_list
+        data:
+          description: 'List of piece types'
+          type: array
+          items:
+            $ref: '#/components/schemas/artshow_piece_type'
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/resource_list'
+    artshow_price_type:
+      properties:
+        type:
+          type: string
+          enum:
+            - price_type
+        price:
+          description: 'Price Name'
+          type: string
+        position:
+          description: 'Price positon on bid sheet'
+          type: integer
+        artist_set:
+          description: 'Price is set by artist'
+          type: integer
+      type: object
+    artshow_price_type_list:
+      properties:
+        type:
+          type: string
+          enum:
+            - price_type_list
+        data:
+          description: 'List of price types'
+          type: array
+          items:
+            $ref: '#/components/schemas/artshow_price_type'
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/resource_list'
+    artshow_registration_question:
+      properties:
+        type:
+          type: string
+          enum:
+            - registration_question
+        id:
+          description: 'Question Id'
+          type: integer
+        boolean:
+          description: 'Question is a yes/no question'
+          type: integer
+        text:
+          description: 'Text of the question.'
+          type: string
+      type: object
+    artshow_registration_question_list:
+      properties:
+        type:
+          type: string
+          enum:
+            - registration_question_list
+        data:
+          description: 'List of registration_question types'
+          type: array
+          items:
+            $ref: '#/components/schemas/artshow_registration_question'
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/resource_list'
+    artshow_return_method_type:
+      properties:
+        type:
+          type: string
+          enum:
+            - return_method_type
+        method:
+          description: 'Return method'
+          type: string
+      type: object
+    artshow_return_method_type_list:
+      properties:
+        type:
+          type: string
+          enum:
+            - return_method_list
+        data:
+          description: 'List of return_method types'
+          type: array
+          items:
+            $ref: '#/components/schemas/artshow_return_method_type'
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/resource_list'
+    artshow_print:
+      properties:
+        type:
+          type: string
+          enum:
+            - print
+        id:
+          type: integer
+        event:
+          oneOf:
+            -
+              $ref: '#/components/schemas/event'
+            -
+              description: 'Event Id'
+              type: integer
+        artist:
+          oneOf:
+            -
+              $ref: '#/components/schemas/artshow_artist'
+            -
+              description: 'Artist Id'
+              type: integer
+        name:
+          type: string
+        art_type:
+          type: string
+        quantity:
+          type: integer
+        price:
+          type: string
+        charity:
+          type: boolean
+        non_tax:
+          type: boolean
+        notes:
+          type: string
+        location:
+          type: string
+        tag_print_count:
+          type: integer
+        status:
+          type: string
+      type: object
+    artshow_print_list:
+      properties:
+        type:
+          type: string
+          enum:
+            - print_list
+        data:
+          description: 'List of prints'
+          type: array
+          items:
+            $ref: '#/components/schemas/artshow_print'
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/resource_list'
+    artshow_artist_event:
+      properties:
+        type:
+          type: string
+          enum:
+            - artist_event
+        event:
+          oneOf:
+            -
+              $ref: '#/components/schemas/event'
+            -
+              description: 'Event Id'
+              type: integer
+        artist:
+          oneOf:
+            -
+              $ref: '#/components/schemas/artshow_artist'
+            -
+              description: 'Artist Id'
+              type: integer
+        mail_in:
+          description: 'Is this mail in art?'
+          type: boolean
+        return_method:
+          type: string
+        insurance_amount:
+          type: string
+        initial_payment:
+          type: string
+        payment_type:
+          type: string
+        check_number:
+          type: string
+        notes:
+          type: string
+        return_labels:
+          type: string
+      type: object
     ticket:
       properties:
         type:
@@ -3721,6 +5372,30 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/error'
+    art_not_found:
+      description: 'Art not found in the system.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+    artist_not_found:
+      description: 'Artist not found in the system.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+    artshow_configuration_not_found:
+      description: 'Artshow configuration not found in the system.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+    print_not_found:
+      description: 'Print not found in the system.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
     ticket_not_found:
       description: 'Ticket not found in the system.'
       content:
@@ -3767,6 +5442,14 @@ components:
         enum:
           - 0
           - 1
+    target_event:
+      name: event
+      in: query
+      description: 'Event being targeted'
+      required: false
+      style: form
+      schema:
+        type: integer
     show_void:
       name: show_void
       in: query
@@ -3838,6 +5521,9 @@ tags:
   -
     name: administrative
     description: 'Features around Administration of the site'
+  -
+    name: artshow
+    description: 'Features around event art show'
   -
     name: registration
     description: 'Features around members of event registration'

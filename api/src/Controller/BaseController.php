@@ -321,8 +321,8 @@ abstract class BaseController
 
     public function handleListType(Request $request, Response $response, array $output, array $data, array $params, int $code = 200)
     {
+        $cleandata = array_values($data);
         if ($this->includes !== null) {
-            $cleandata = array_values($data);
             $short = $request->getQueryParam('short_response', false);
             if (!boolval($short)) {
                 foreach ($cleandata as $index => $entry) {
